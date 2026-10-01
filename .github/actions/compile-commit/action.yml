@@ -43,6 +43,14 @@ runs:
         RETRY=.github/bin/retry
         # -------
 
+        # TEMPORARY DIAGNOSTIC CHANGE - DO NOT MERGE
+        # Drop --quiet/--no-transfer-progress just for this throwaway run so the actual
+        # download attempts (and any real HTTP status / transport error) for the
+        # org.apache.iceberg:iceberg-api/iceberg-core resolution show up in the log,
+        # instead of only the final "cached negative resolution" summary.
+        MAVEN_COMPILE_COMMITS="${MAVEN_COMPILE_COMMITS/--quiet /}"
+        MAVEN_COMPILE_COMMITS="${MAVEN_COMPILE_COMMITS/--no-transfer-progress/}"
+
         # For building with Maven we need MAVEN_OPTS to equal MAVEN_INSTALL_OPTS
         export MAVEN_OPTS="${MAVEN_INSTALL_OPTS}"
         $MAVEN install \
